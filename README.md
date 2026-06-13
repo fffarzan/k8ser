@@ -29,28 +29,6 @@ All the managing processes are done by master nodes. 4 processes run on it:
 
 # Main comps
 
-# Minikube and Kubectl
-
-# k8s CLI
-
-# YAML config file
-
-# k8s namepaces
-
-# Ingress
-
-# Helm
-
-# Volumes
-
-# k8s statefulSet
-
-# Services
-
-# Refs
-
-- [k8s nana](https://www.youtube.com/watch?v=X48VuDVv0do)
-
 Pod: Smallest unit of k8s. An abstraction over a container. Usually 1 app per pod. Each Pod gets its own IP address (new IP address on recreation).
 
 Service: permanent IP address. Also a load balancer. Lifecycle of Pods and Services are not connected.
@@ -72,3 +50,51 @@ Deployment: Blueprint for the app Pods. We create Deployments not Pods. They are
 If one of our Replicas of the app Pod dies, Service will forward the request to another one.
 
 StatefulSet: DB can't be replicated via Deployment. All the DBs access to same shared data storage. It's hard to manage them. DBs are often hosted outside of k8s dev.
+
+# Minikube and Kubectl
+
+minikube: One-Node cluster that runs master and worker processes in one Node (machine) and this Node has Docker per-installed. It runs through a Virtual Box. It is used for testing purposes.
+
+kubectl: Command-line tool. the way to interact with clusters of k8s. We should work with ApiServer of Master pocess. We can do it in three ways: UI, API and CLI (kubectl).
+
+Kubectl is used for interacting with any cluster of k8s including Minucube, Cloud, ... .
+
+Installation:
+
+```bash
+brew update
+brew install hyperkit
+brew install minikube # minikube has kubectl as dependency
+
+kubectl # check working
+minikube # check working
+```
+
+Creating a minikube cluster:
+
+```bash
+minikube start --vm-driver=hyperkit
+kubectl get nodes # get status of nodes
+minikube status
+kubectl version
+```
+
+# k8s CLI
+
+# YAML config file
+
+# k8s namepaces
+
+# Ingress
+
+# Helm
+
+# Volumes
+
+# k8s statefulSet
+
+# Services
+
+# Refs
+
+- [k8s nana](https://www.youtube.com/watch?v=X48VuDVv0do)
