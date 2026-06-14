@@ -81,6 +81,18 @@ kubectl version
 
 # k8s CLI
 
+Note: Pod is the smallest unit on k8s but we are creating Deployment (abstraction over Pods).
+
+```bash
+kubectl get nodes # get status of nodes
+kubectl get pod # get status of pods
+kubectl get services
+kubectl get deployment
+kubectl get replicaset # replicaset: managing the replicas of a Pod
+
+kubectl create deployment NAME --image=image [--dry-run] # image goes and download latest doecker image of the tool like nginx. This command creates bluprint for creating Pods.
+```
+
 # YAML config file
 
 # k8s namepaces
