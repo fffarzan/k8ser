@@ -93,7 +93,45 @@ kubectl get replicaset # replicaset: managing the replicas of a Pod
 kubectl create deployment NAME --image=image [--dry-run] # image goes and download latest doecker image of the tool like nginx. This command creates bluprint for creating Pods.
 ```
 
+layers of abstraction:
+
+- 4. Deployment
+- 3. ReplicaSet
+- 2. Pod
+- 1. Container
+
+Everything below the Deployment should be managed by K8s.
+
+```bash
+kubectl edit deployment [name]
+
+kubectl logs [podname]
+
+kubectl exec -it [podname] -- bin/bash # open up an interactive terminal of the pod
+
+kubectl delete deployment [name]
+kubectl delete -f [filename] # delete with config file
+
+kubectl apply -f [filename] # execute and apply the config file
+```
+
 # YAML config file
+
+3 parts:
+
+- metadata
+- specification
+- status: k8s automatically compares the desired state and the actual state and updates continuasly. k8s gets the data for comparison from `etcd`.
+
+```bash
+kubectl apply -f nginx-deployment.yaml
+kubectl apply -f nginx-service.yaml
+kubectl describe service nginx-service
+kubectl get pod -o wide
+kubectl get deployment nginx-deployment -o yaml > nginx-depl-result.yaml # get updated info of deployment which is inside of `etcd`.
+kubectl delete -f nginx-deployment.yaml
+kubectl delete -f nginx-service.yaml
+```
 
 # k8s namepaces
 
