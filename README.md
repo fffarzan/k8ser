@@ -84,6 +84,7 @@ kubectl version
 Note: Pod is the smallest unit on k8s but we are creating Deployment (abstraction over Pods).
 
 ```bash
+kubectl get all
 kubectl get nodes # get status of nodes
 kubectl get pod # get status of pods
 kubectl get services
@@ -134,6 +135,78 @@ kubectl delete -f nginx-service.yaml
 ```
 
 # k8s namepaces
+
+It's a virtual cluster inside a k8s cluster. We can organize resources in namespaces.
+
+k8s has 4 namespaces by default:
+
+- kube-system: Don't touch!
+  - system processes
+  - master and kubectl processes
+- kube-public: publicely accessible data
+  - a configmap (cluster info)
+- kube-node-lease
+  - heartbeats of nodes
+  - each node has associated lease object in namespace
+  - determines availability of node
+- default: resourses we created
+
+Note: k8s-dashboard only comes with minikube and it's not a default namespace.
+
+```bash
+kubectl get namespace
+
+kubectl create namespace [name]
+```
+
+### usage
+
+- We shouldn't use it for smaller projects.
+- several teams on just one cluster app. (avoiding conflicts)
+- If you wanna have stage or dev environments, that a good idea to have different namespaces (we re-use componentes in different envs).
+- Blue/Green deployment (you have two versions of production inside a cluster).
+- access and resource-limit.
+
+You can't access most resources from another namespace.
+
+Each namespace must have its own configMap and secret.
+
+Services can be shared across namespaces.
+
+Some components globally live in the cluster and can't be inside of any namespace. Like Volume and Node. we can check them in this way:
+
+```bash
+kubectl api-resources --namespaced=false
+```
+
+By default components create in default namespace. We can create components inside of custom NS by this:
+
+```bash
+kubectl apply -f mysql-configmap.yaml --namespace=fff-ns
+```
+
+We can put it inside config file:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+  namespace: fff-ns
+data:
+  database_url: mysql-service.database
+```
+
+### change active ns
+
+If we want to see inside of ns, we should add `-n [my-namespace-name]` flag at the end of all commands. To prevent this we can change showing ns from default to our custom ns:
+
+```bash
+brew install kubectx
+
+kubens
+kubens [name] # to switch ns
+```
 
 # Ingress
 
